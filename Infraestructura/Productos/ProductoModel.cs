@@ -19,13 +19,13 @@ namespace Infraestructura.Productos
 
         public int Update(Producto p)
         {
-            if(p == null)
+            if (p == null)
             {
                 throw new ArgumentException("El producto no puede ser null");
             }
 
             int index = GetIndexById(p.Id);
-            if(index < 0)
+            if (index < 0)
             {
                 throw new Exception($"El producto con id {p.Id} no se encuentra");
             }
@@ -48,7 +48,7 @@ namespace Infraestructura.Productos
                 throw new Exception($"El producto con id {p.Id} no se encuentra");
             }
 
-            if(index != productos.Length - 1)
+            if (index != productos.Length - 1)
             {
                 productos[index] = productos[productos.Length - 1];
             }
@@ -93,9 +93,9 @@ namespace Infraestructura.Productos
 
             int index = int.MinValue, i = 0;
 
-            foreach(Producto p in productos)
+            foreach (Producto p in productos)
             {
-                if(p.Id == id)
+                if (p.Id == id)
                 {
                     index = i;
                     break;
@@ -110,14 +110,14 @@ namespace Infraestructura.Productos
         {
             Producto[] tmp = null;
 
-            if(productos == null)
+            if (productos == null)
             {
                 return tmp;
             }
 
-             foreach(Producto p in productos)
+            foreach (Producto p in productos)
             {
-                if(p.UnidadMedida == um)
+                if (p.UnidadMedida == um)
                 {
                     Add(p, ref tmp);
                 }
@@ -173,14 +173,18 @@ namespace Infraestructura.Productos
 
         public Producto[] GetProductosOrderByPrice()
         {
-            Array.Sort(productos, new Producto.ProductoPriceComparer() );
+            Array.Sort(productos, new Producto.ProductoPriceComparer());
             return productos;
         }
+        
 
-        #endregion
 
-        #region Queries
-        public Producto GetProductoById(int id)
+
+
+    #endregion
+
+    #region Queries
+    public Producto GetProductoById(int id)
         {
             if(id <= 0)
             {
@@ -191,6 +195,11 @@ namespace Infraestructura.Productos
        
 
             return index <= 0 ? null : productos[index];
+        }
+
+        public int GetLastProductoId()
+        {
+            return productos == null ? 0 : productos[productos.Length - 1].Id;
         }
         #endregion
     }
